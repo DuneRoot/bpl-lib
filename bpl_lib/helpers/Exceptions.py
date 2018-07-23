@@ -1,0 +1,2 @@
+class BPLNetworkException(Exception):
+    pass
