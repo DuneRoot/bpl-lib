@@ -1,10 +1,12 @@
 from datetime import datetime
-import json
-import os
 
-from bpl_lib.helpers.Constants import NETWORK_CONFIG, NETWORKS_PATH
 from bpl_lib.helpers.Exceptions import BPLNetworkException
+from bpl_lib.network.Database import Database
 from bpl_lib.helpers.Util import hexlify
+from bpl_lib.network.DDL import DDL
+
+network = {}
+DDL.ddl()
 
 class Network:
 
@@ -16,12 +18,16 @@ class Network:
         :return: list (string)
         """
 
-        return [network.split(".")[0] for network in os.listdir(NETWORKS_PATH)]
+        database = Database()
+        networks = database.query("SELECT Identifier FROM Networks;")
+        database.close()
+
+        return [identifier[0] for identifier in networks]
 
     @staticmethod
     def use(identifier):
         """
-        Loads the configuration of a network into config.json
+        Loads the configuration of a network from networks.db
 
         :param identifier: valid network identifer (string)
         """
@@ -33,43 +39,77 @@ class Network:
                 "networks": Network._get_networks()
             })
 
-        with open(os.path.join(NETWORKS_PATH, "{0}.json".format(identifier)), "r") as network, \
-             open(NETWORK_CONFIG, "w") as config:
-            json.dump(json.load(network), config, indent=4, sort_keys=True)
+        database = Database()
+        network_result_set = database.query(
+            "SELECT BeginEpoch, Version FROM Networks WHERE Identifier = ?;",
+            (identifier, )
+        )[0]
+
+        global network
+        network = {
+            "begin_epoch": datetime.strptime(network_result_set[0], "%Y-%m-%d %H:%M:%S"),
+            "version": int(network_result_set[1], base=16)
+        }
+
+        database.close()
 
     @staticmethod
-    def use_custom(begin_epoch, version):
+    def use_custom(identifier, begin_epoch, version):
         """
-        Writes a custom configuration into config.json
+        Writes custom configuration into network and networks.db
 
         :param begin_epoch:
         :param version:
         """
 
-        with open(NETWORK_CONFIG, "w") as config:
-            json.dump({
-                "begin_epoch": begin_epoch.strftime("%Y-%m-%d %H:%M:%S"),
-                "version": "0x" + hexlify(bytes([version]))
-            }, config, indent=4, sort_keys=True)
+        if identifier in Network._get_networks():
+            raise BPLNetworkException({
+                "message": "Network identifier UNIQUE CONSTRAINT.",
+                "network": identifier,
+                "networks": Network._get_networks()
+            })
+
+        database = Database()
+        database.insert(
+            "INSERT INTO Networks(Identifier, BeginEpoch, Version) "
+          + "VALUES (?, ?, ?);",
+            (identifier, begin_epoch.strftime("%Y-%m-%d %H:%M:%S"),
+            "0x" + hexlify(bytes([version])))
+        )
+        database.close()
+
+        global network
+        network = {
+            "begin_epoch": begin_epoch,
+            "version": version
+        }
 
     @staticmethod
     def get_begin_epoch():
         """
-        Gets the begin epoch time stored in config.json
+        Gets the begin epoch time stored in networks
 
         :return: begin epoch time (datetime)
         """
 
-        with open(NETWORK_CONFIG, "r") as config:
-            return datetime.strptime(json.load(config)["begin_epoch"], "%Y-%m-%d %H:%M:%S")
+        if not network:
+            raise BPLNetworkException({
+                "message": "network has not yet been set. Please use Network.use."
+            })
+
+        return network["begin_epoch"]
 
     @staticmethod
     def get_version():
         """
-        Gets the network version stored in config.json
+        Gets the network version stored in networks
 
         :return: network version (integer)
         """
 
-        with open(NETWORK_CONFIG, "r") as config:
-            return int(json.load(config)["version"], 16)
+        if not network:
+            raise BPLNetworkException({
+                "message": "network has not yet been set. Please use Network.use."
+            })
+
+        return network["version"]

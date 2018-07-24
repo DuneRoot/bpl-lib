@@ -5,8 +5,7 @@ from bpl_lib import ROOT
 
 INTERVAL = 8
 
-NETWORK_CONFIG = os.path.join(ROOT, "network\\config.json")
-NETWORKS_PATH = os.path.join(ROOT, "network\\networks")
+NETWORKS_DB_PATH = os.path.join(ROOT, "network\\networks.db")
 
 class TRANSACTION_TYPE(IntEnum):
     TRANSFER = 0

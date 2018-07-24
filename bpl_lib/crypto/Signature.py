@@ -80,7 +80,7 @@ class Signature(Keys):
     @staticmethod
     def verify_signature(G, n, Q_a, message, signature):
         r, s = sigdecode_der_canonize(signature, n)
-        print(r, s)
+
         # Step 1
         if not (1 <= r <= n - 1 and 1 <= s <= n - 1):
             return False
@@ -99,10 +99,10 @@ class Signature(Keys):
 
         # Step 6
         p1 = u_1 * G + u_2 * Q_a
-        print(p1)
+
         if not verify_point(G, p1):
             return False
 
         # Step 7
-        print(r == p1.x() % n)
+
         return r == p1.x() % n
