@@ -1,7 +1,7 @@
 from enum import IntEnum
 import os
 
-from . import ROOT
+from bpl_lib import ROOT
 
 INTERVAL = 8
 

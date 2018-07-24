@@ -1,6 +1,6 @@
-from .transactions.Transaction import Transaction
-from .helpers.Constants import TRANSACTION_TYPE
-from .crypto.Keys import Keys
+from bpl_lib.transactions.Transaction import Transaction
+from bpl_lib.helpers.Constants import TRANSACTION_TYPE
+from bpl_lib.crypto.Keys import Keys
 
 class IPFS(Transaction):
 

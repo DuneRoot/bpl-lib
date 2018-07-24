@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from .helpers.Constants import INTERVAL
-from .network.Network import Network
+from bpl_lib.helpers.Constants import INTERVAL
+from bpl_lib.network.Network import Network
 
 def get_time(time=None):
     """

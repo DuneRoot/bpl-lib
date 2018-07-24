@@ -22,7 +22,7 @@ setuptools.setup(
     version="0.0.1",
     author="Alistair O'Brien",
     author_email="alistair.o'brien@ellesmere.com",
-    packes=setuptools.find_packages(excludes=["tests", "tests.*"]),
+    packes=setuptools.find_packages(exclude=["tests", "tests.*"]),
     install_requires=requires,
     extras_require=extras_require,
     tests_require=tests_require,

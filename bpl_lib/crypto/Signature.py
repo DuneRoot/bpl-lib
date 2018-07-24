@@ -5,8 +5,8 @@ from ecdsa.numbertheory import inverse_mod
 from ecdsa.rfc6979 import generate_k
 from ecdsa import SECP256k1
 
-from .helpers.Util import hexlify, unhexlify, verify_point, sigdecode_der_canonize
-from .crypto.Keys import Keys
+from bpl_lib.helpers.Util import hexlify, unhexlify, verify_point, sigdecode_der_canonize
+from bpl_lib.crypto.Keys import Keys
 
 class Signature(Keys):
 

@@ -1,9 +1,9 @@
 import base58
 
-from .helpers.Util import Buffer, unhexlify
-from .network.Network import Network
-from .crypto.Crypto import ripemd160
-from .crypto.Keys import Keys
+from bpl_lib.helpers.Util import Buffer, unhexlify
+from bpl_lib.network.Network import Network
+from bpl_lib.crypto.Crypto import ripemd160
+from bpl_lib.crypto.Keys import Keys
 
 class Address:
 

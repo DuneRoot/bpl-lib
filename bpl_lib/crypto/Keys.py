@@ -2,8 +2,8 @@ from ecdsa.util import number_to_string, string_to_number
 from ecdsa import SigningKey, SECP256k1
 from ecdsa.ellipticcurve import Point
 
-from .helpers.Util import hexlify
-from .crypto.Crypto import sha256
+from bpl_lib.helpers.Util import hexlify
+from bpl_lib.crypto.Crypto import sha256
 
 class Keys:
 
