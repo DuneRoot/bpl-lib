@@ -1,7 +1,9 @@
 from enum import IntEnum
 import os
 
-from bpl_lib import ROOT
+from . import ROOT
+
+INTERVAL = 8
 
 NETWORK_CONFIG = os.path.join(ROOT, "network\\config.json")
 NETWORKS_PATH = os.path.join(ROOT, "network\\networks")

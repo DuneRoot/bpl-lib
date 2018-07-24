@@ -1,11 +1,10 @@
+from datetime import datetime
 import json
 import os
-from datetime import datetime
 
-from bpl_lib.helpers.Exceptions import BPLNetworkException
-from bpl_lib.helpers.Util import hexlify
-from bpl_lib.helpers.Constants import NETWORK_CONFIG, NETWORKS_PATH
-
+from .helpers.Constants import NETWORK_CONFIG, NETWORKS_PATH
+from .helpers.Exceptions import BPLNetworkException
+from .helpers.Util import hexlify
 
 class Network:
 

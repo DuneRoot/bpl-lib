@@ -1,19 +1,19 @@
 import base58
-from bpl_lib.crypto.Signature import Signature
-from bpl_lib.crypto.Keys import Keys
 
-from bpl_lib.crypto.Crypto import sha256
-from bpl_lib.helpers.Util import Buffer, unhexlify, hexlify
-from bpl_lib.time.Slot import get_time
+from .helpers.Util import Buffer, unhexlify, hexlify
+from .helpers.Constants import TRANSACTION_FEES
+from .crypto.Signature import Signature
+from .crypto.Crypto import sha256
+from .time.Slot import get_time
 
 class Transaction:
 
-    def __init__(self, type, secret):
+    def __init__(self, type, fee):
         """
         Parent Class for all transactons
 
         :param type: transaction type (TRANSACTION_TYPE)
-        :param secret: secret passphrase (string or bytes)
+        :param fee: fee for transaction (integer)
         """
 
         self._id = None
@@ -21,26 +21,46 @@ class Transaction:
         self._recipient_id = None
 
         self._amount = 0
-        self._fee = None
+        self._fee = fee or TRANSACTION_FEES[self._type]
         self._asset = {}
 
         self._vendor_field = None
         self._timestamp = get_time()
 
         self._requester_public_key = None
-        self._sender_public_key = Keys(secret).get_public_key()
+        self._sender_public_key = None
 
         self._signature = None
         self._sign_signature = None
 
-    def _get_id(self):
-        """
-        Computes the id for the transaction
+    @classmethod
+    def generate(cls, *args):
+        raise NotImplementedError
 
-        :return: id (string)
+    def sign(self, secret, second_secret=False):
+        """
+        Signs the transaction with signatures and an id
+
+        :param secret: secret passphrase (string or bytes)
+        :param second_secret: second secret passphrase (string or bytes)
         """
 
-        return hexlify(sha256(self._to_bytes(False, False)))
+        self._sign(secret)
+        if second_secret:
+            self._second_sign(second_secret)
+        self._id = hexlify(sha256(self._to_bytes(False, False)))
+
+    def sign_from_dict(self, transaction):
+        """
+        Signs the transaction with signatures and an id from a dictionary
+
+        :param transaction: (dict)
+        """
+
+        self._signature = transaction["signature"]
+        if transaction.get("signSignature", False):
+            self._sign_signature = transaction["signSignature"]
+        self._id = transaction["id"]
 
     def _get_hash(self, skip_signature=True, skip_second_signature=True):
         """
@@ -72,6 +92,10 @@ class Transaction:
             "signature": self._signature,
             "signSignature": self._sign_signature
         }
+
+    @classmethod
+    def from_dict(cls, transaction):
+        raise NotImplementedError
 
     def _to_bytes(self, skip_signature=True, skip_second_signature=True):
         """
@@ -150,7 +174,6 @@ class Transaction:
 
         :param secret: secret passphrase used to generate self._sender_public_key (string or bytes)
         """
-
         signature = Signature(secret).sign(self._get_hash())
         self._signature = signature["signature"]
 
@@ -167,19 +190,21 @@ class Transaction:
     def verify(self):
         """
         Verifies the transaction using first signature
-        #TODO produce from_json method to allow transactions to be constructed from json objects, this will allow api's to quickly verify transactions
+        #TODO produce from_json method to allow transactions to be constructed from json objects,
+        this will allow api's to quickly verify transactions
 
         :return: is valid (boolean)
         """
 
-        Signature.verify(self._sender_public_key, self._get_hash(False, True), self._signature)
+        return Signature.verify(self._sender_public_key, self._get_hash(), self._signature)
 
-    def second_verify(self):
+    def second_verify(self, public_key):
         """
         Verifies the transaction using both signatures
-        #TODO produce from_json method to allow transactions to be constructed from json objects, this will allow api's to quickly verify transactions
+        #TODO produce from_json method to allow transactions to be constructed from json objects,
+        this will allow api's to quickly verify transactions
 
         :return: is valid (boolean)
         """
 
-        Signature.verify(self._sender_public_key, self._get_hash(False, False), self._sign_signature)
+        return Signature.verify(public_key, self._get_hash(False, True), self._sign_signature)

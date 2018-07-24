@@ -1,5 +1,8 @@
 import binascii
 
+from ecdsa.util import sigdecode_der
+from ecdsa.ecdsa import point_is_valid
+
 def hexlify(data):
     """
     Converts binary data to hexadecimal
@@ -21,6 +24,31 @@ def unhexlify(data):
     if len(data) % 2:
         data = "0" + data
     return binascii.unhexlify(data)
+
+def sigdecode_der_canonize(signature, n):
+    """
+    Decodes a signature that is encoded using canonical DER
+
+    :param signature: signature (bytes)
+    :param n: order of G, means that n * G = 0 (integer)
+    :return: r, s (integer)
+    """
+
+    r, s = sigdecode_der(signature, n)
+    if (n - s) > n / 2:
+        return r, (n - s)
+    return r, s
+
+def verify_point(G, p):
+    """
+    Verifies a point on the elliptic curve G.curve
+
+    :param G: elliptic curve base point, a generator of the elliptic curve with large prime order n
+    :param p: point
+    :return: boolean
+    """
+
+    return point_is_valid(G, p.x(), p.y())
 
 class Buffer:
 
@@ -110,4 +138,3 @@ class Buffer:
 
     def __len__(self):
         return len(self._bytearray)
-
