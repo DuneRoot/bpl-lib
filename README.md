@@ -47,10 +47,20 @@ This is an easy-to-use Python package for interacting with a Blockpool Blockchai
 ## Installation
 
 ```sh 
-pip install bpl-lib
+python -m pip install --no-cache-dir --index-url https://test.pypi.org/simple/ bpl-lib
 ```
 
-Note: not working as of 2018-07-25
+Note: package has been uploaded to test.pypi. Some dependencies might not be able to be install (e.g. base58) due to this. If this occurs use:
+```sh
+pip install base58
+pip install ecdsa
+```
+
+Then 
+```sh 
+python -m pip install --no-cache-dir --index-url https://test.pypi.org/simple/ bpl-lib
+```
+
 
 ## Usage
 
@@ -212,7 +222,7 @@ print(Network.get_version())
 Printing:
 
 ```python
-2017-03-21 13:00:00
+"2017-03-21 13:00:00"
 23
 ```
 
@@ -238,7 +248,7 @@ print(Network.get_version())
 Printing:
 
 ```python
-2018-07-25 15:30:00
+"2018-07-25 15:30:00"
 25
 ```
 
@@ -260,7 +270,7 @@ print(Network.get_begin_epoch())
 Printing:
 
 ```python
-2017-03-21 13:00:00
+"2017-03-21 13:00:00"
 ```
 
 ##### Accessing version
@@ -312,7 +322,7 @@ print(Time.get_real_time(42429391))
 Printing:
 
 ```python
-2018-07-25 14:56:31
+"2018-07-25 14:56:31"
 ```
 
 #### get_slot_number
@@ -368,7 +378,7 @@ Printing:
 {  
    'recipientId': 'BCU4rocsgw2GNihtnzAgFzRfx7XebZRpRi',
    'senderPublicKey': '02e012f0a7cac12a74bdc17d844cbc9f637177b470019c32a53cef94c7a56e2ea9',
-   'type': <TRANSACTION_TYPE.TRANSFER: 0>,
+   'type': "<TRANSACTION_TYPE.TRANSFER: 0>",
    'id': '9bfa3aee9ed984f856c6268b0b03dd908d3541c4c94f614fdae5c66c587560b2',
    'asset': {},
    'venderField': None,
