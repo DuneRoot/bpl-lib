@@ -1,5 +1,8 @@
 import setuptools
 
+with open("README.md", "r") as file:
+    long_description = file.read()
+
 requires = [
     "base58>=1.0.0",
     "ecdsa"
@@ -16,11 +19,13 @@ packages = [
 
 setuptools.setup(
     name="bpl-lib",
-    description="A library for the Blockpool Blockchain.",
-    version="0.0.1",
-    url="https://github.com/DuneRoot/bpl-lib",
+    version="0.0.10",
     author="Alistair O'Brien",
     author_email="alistair.o'brien@ellesmere.com",
+    description="A library for the Blockpool Blockchain.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/DuneRoot/bpl-lib",
     packages=packages,
     install_requires=requires
 )
