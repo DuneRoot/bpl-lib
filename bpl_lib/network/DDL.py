@@ -1,4 +1,4 @@
-from bpl_lib.network.Database import Database
+from bpl_lib.helpers.Database import Database
 
 class DDL:
     @staticmethod

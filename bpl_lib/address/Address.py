@@ -1,5 +1,7 @@
 import base58
+import sys
 
+from bpl_lib.helpers.Exceptions import BPLNetworkException
 from bpl_lib.helpers.Util import Buffer, unhexlify
 from bpl_lib.network.Network import Network
 from bpl_lib.crypto.Crypto import ripemd160
@@ -43,5 +45,8 @@ class Address:
 
         try:
             return base58.b58decode_check(address)[0] == Network.get_version()
+        except BPLNetworkException as error:
+            print(error, file=sys.stderr)
+            return False
         except Exception:
             return False

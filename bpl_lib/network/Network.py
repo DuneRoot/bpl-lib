@@ -1,9 +1,9 @@
 from datetime import datetime
 
 from bpl_lib.helpers.Exceptions import BPLNetworkException
-from bpl_lib.network.Database import Database
 from bpl_lib.helpers.Util import hexlify
 from bpl_lib.network.DDL import DDL
+from bpl_lib.helpers.Database import Database
 
 network = {}
 DDL.ddl()

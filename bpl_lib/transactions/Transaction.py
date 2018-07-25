@@ -4,7 +4,7 @@ from bpl_lib.helpers.Util import Buffer, unhexlify, hexlify
 from bpl_lib.helpers.Constants import TRANSACTION_FEES
 from bpl_lib.crypto.Signature import Signature
 from bpl_lib.crypto.Crypto import sha256
-from bpl_lib.time.Slot import get_time
+from bpl_lib.time.Time import get_time
 
 class Transaction:
 

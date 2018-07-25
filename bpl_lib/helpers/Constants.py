@@ -5,7 +5,7 @@ from bpl_lib import ROOT
 
 INTERVAL = 8
 
-NETWORKS_DB_PATH = os.path.join(ROOT, "network\\networks.db")
+NETWORKS_DB = os.path.join(ROOT, "network\\networks.db")
 
 class TRANSACTION_TYPE(IntEnum):
     TRANSFER = 0
