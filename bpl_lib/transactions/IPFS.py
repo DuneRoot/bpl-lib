@@ -58,4 +58,4 @@ class IPFS(Transaction):
         return self
 
     def _handle_transaction_type(self, buffer):
-        raise buffer
+        return buffer
