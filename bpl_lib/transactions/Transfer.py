@@ -37,7 +37,9 @@ class Transfer(Transaction):
 
         self._recipient_id = recipient_id
         self._amount = amount
-        self._vendor_field = vendor_field
+
+        if vendor_field and len(vendor_field) <= 64:
+            self._vendor_field = vendor_field
 
         self.sign(secret, second_secret)
         return self
@@ -57,7 +59,10 @@ class Transfer(Transaction):
 
         self._recipient_id = transaction["recipientId"]
         self._amount = transaction["amount"]
-        self._vendor_field = transaction.get("vendorField", None)
+
+        vendor_field = transaction.get("vendorField", None)
+        if vendor_field and len(vendor_field) <= 64:
+            self._vendor_field = vendor_field
 
         self.sign_from_dict(transaction)
         return self
