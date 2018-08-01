@@ -29,7 +29,7 @@ class DDL:
             },
             "testnet": {
               "begin_epoch": "2017-03-21 13:00:00",
-              "version": "0x52"
+              "version": "0x17"
             }
         }
 
