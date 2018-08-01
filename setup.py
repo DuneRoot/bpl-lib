@@ -9,6 +9,7 @@ requires = [
 ]
 
 packages = [
+    "bpl_lib",
     "bpl_lib.address",
     "bpl_lib.crypto",
     "bpl_lib.helpers",
@@ -19,7 +20,7 @@ packages = [
 
 setuptools.setup(
     name="bpl-lib",
-    version="0.0.10",
+    version="0.0.12",
     author="Alistair O'Brien",
     author_email="alistair.o'brien@ellesmere.com",
     description="A library for the Blockpool Blockchain.",
