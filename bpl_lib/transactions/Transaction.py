@@ -4,7 +4,7 @@ from bpl_lib.helpers.Util import Buffer, unhexlify, hexlify
 from bpl_lib.helpers.Constants import TRANSACTION_FEES
 from bpl_lib.crypto.Signature import Signature
 from bpl_lib.crypto.Crypto import sha256
-from bpl_lib.time.Time import get_time
+from bpl_lib.time.Time import Time
 
 class Transaction:
 
@@ -25,7 +25,7 @@ class Transaction:
         self._asset = {}
 
         self._vendor_field = None
-        self._timestamp = get_time()
+        self._timestamp = Time.get_time()
 
         self._requester_public_key = None
         self._sender_public_key = None
@@ -123,7 +123,7 @@ class Transaction:
 
 
         if self._vendor_field:
-            vendor_field = unhexlify(self._vendor_field)
+            vendor_field = self._vendor_field.encode()
             buffer.write_bytes(vendor_field + bytes(64 - len(vendor_field)))
         else:
             buffer.write_bytes(bytes(64))
