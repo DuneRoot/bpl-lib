@@ -3,7 +3,7 @@ import os
 
 from bpl_lib import ROOT
 
-INTERVAL = 8
+INTERVAL = 15
 
 NETWORKS_DB = os.path.join(ROOT, "network\\networks.db")
 
