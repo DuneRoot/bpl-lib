@@ -21,7 +21,7 @@ class Address:
         buffer = Buffer()
         buffer.write_byte(Network.get_version())
         buffer.write_bytes(ripemd160(unhexlify(public_key)))
-        return base58.b58encode_check(buffer.to_bytes())
+        return base58.b58encode_check(buffer.to_bytes()).decode()
 
     @staticmethod
     def from_secret(secret):
