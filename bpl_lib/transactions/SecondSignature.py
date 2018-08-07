@@ -59,5 +59,5 @@ class SecondSignature(Transaction):
         return self
 
     def _handle_transaction_type(self, buffer):
-        buffer.write_bytes(unhexlify(self._asset["signature"]))
+        buffer.write_bytes(unhexlify(self._asset["signature"]["publicKey"]))
         return buffer
