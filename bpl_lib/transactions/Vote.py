@@ -1,5 +1,6 @@
 from bpl_lib.transactions.Transaction import Transaction
 from bpl_lib.helpers.Constants import TRANSACTION_TYPE
+from bpl_lib.address.Address import Address
 from bpl_lib.crypto.Keys import Keys
 
 class Vote(Transaction):
@@ -32,6 +33,7 @@ class Vote(Transaction):
 
         self = cls(fee, _error_use_class_method=False)
         self._sender_public_key = Keys(secret).get_public_key()
+        self._recipient_id = Address.from_secret(secret)
 
         self._asset["votes"] = votes
 
@@ -49,6 +51,8 @@ class Vote(Transaction):
 
         self = cls(transaction["fee"], _error_use_class_method=False)
         self._sender_public_key = transaction["senderPublicKey"]
+        self._recipient_id = transaction["recipientId"]
+        
         self._timestamp = transaction["timestamp"]
 
         self._asset["votes"] = transaction["asset"]["votes"]
