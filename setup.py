@@ -20,7 +20,7 @@ packages = [
 
 setuptools.setup(
     name="bpl-lib",
-    version="0.0.12",
+    version="0.0.13",
     author="Alistair O'Brien",
     author_email="alistair.o'brien@ellesmere.com",
     description="A library for the Blockpool Blockchain.",
