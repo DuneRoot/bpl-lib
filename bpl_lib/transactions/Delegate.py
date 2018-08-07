@@ -60,5 +60,5 @@ class Delegate(Transaction):
         return self
 
     def _handle_transaction_type(self, buffer):
-        buffer.write_bytes(self._asset["username"].encode())
+        buffer.write_bytes(self._asset["delegate"]["username"].encode())
         return buffer
