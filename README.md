@@ -46,21 +46,9 @@ This is an easy-to-use Python package for interacting with a Blockpool Blockchai
 
 ## Installation
 
-```sh 
-python -m pip install --no-cache-dir --index-url https://test.pypi.org/simple/ bpl-lib
-```
-
-Note: package has been uploaded to test.pypi. Some dependencies might not be able to be install (e.g. base58) due to this. If this occurs use:
 ```sh
-pip install base58
-pip install ecdsa
+python -m pip install bpl-lib
 ```
-
-Then 
-```sh 
-python -m pip install --no-cache-dir --index-url https://test.pypi.org/simple/ bpl-lib
-```
-
 
 ## Usage
 
@@ -208,7 +196,7 @@ There are current 2 methods that allows a client to use a network:
 - ``use_custom``
 
 ##### use
-The `use` method requires a network ``identifier`` and queries the local network database for the specified configuration. The method then stores the configuration in memory. 
+The `use` method requires a network ``identifier`` and queries the local network database for the specified configuration. The method then stores the configuration in memory.
 
 ```python
 from bpl_lib.network import Network
@@ -227,12 +215,12 @@ Printing:
 ```
 
 ##### use_custom
-The `use_custom` method requires a network `identifier`, `begin_epoch` and `version`. The method first inserts this custom configuration into the local network database, this will allow you to make use of the custom configuration in other applications. After that the method stores the custom configuration in memory. 
+The `use_custom` method requires a network `identifier`, `begin_epoch` and `version`. The method first inserts this custom configuration into the local network database, this will allow you to make use of the custom configuration in other applications. After that the method stores the custom configuration in memory.
 
 Note: ``identifier`` is used as the primary key in the database, this implies that the identifier for the network must be unique. If the identifier is not unique a `BPLNetworkException` is raised.
 ```python
-from datetime import datetime 
- 
+from datetime import datetime
+
 from bpl_lib.network import Network
 
 identifier = "test_use_custom_method"
@@ -258,7 +246,7 @@ After loading a network configuration into memory, there are 2 settings that can
 - `version`
 
 ##### Accessing begin_epoch
-To access `begin_epoch` the `Network.get_begin_epoch` method must be used. 
+To access `begin_epoch` the `Network.get_begin_epoch` method must be used.
 ```python
 from bpl_lib.network import Network
 
@@ -359,7 +347,7 @@ Printing:
 Each transaction is built from the Transaction Entity (See Features). There are 2 currently possible ways of building a BPL transaction:
  - `Transaction.generate`
  - `Transaction.from_dict`
- 
+
 #### Buidling a transaction using generate
 `Transaction.generate` automatically calculates the timestamp for the transaction, therefore a network must be selected before a transaction can be built. (See network)
 
@@ -390,7 +378,7 @@ Printing:
 }
 ```
 
-To see how each transaction is built see the documentation in the code. 
+To see how each transaction is built see the documentation in the code.
 
 ***
 
