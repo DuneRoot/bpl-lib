@@ -22,7 +22,7 @@ setuptools.setup(
     name="bpl-lib",
     version="0.1.0",
     author="Alistair O'Brien",
-    author_email="alistair.o'brien@ellesmere.com",
+    author_email="alistair@duneroot.co.uk",
     description="A library for the Blockpool Blockchain.",
     long_description=long_description,
     long_description_content_type="text/markdown",
